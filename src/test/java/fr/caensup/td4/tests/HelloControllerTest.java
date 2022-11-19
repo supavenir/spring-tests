@@ -1,6 +1,10 @@
 package fr.caensup.td4.tests;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,6 +32,16 @@ class HelloControllerTest {
   void helloShouldReturnBonjour() throws Exception {
     when(helloService.getMessage()).thenReturn("Bonjour");
     this.mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().string(containsString("Bonjour")));
+  }
+
+  @Test
+  void helloViewShouldReturnBonjour() throws Exception {
+    when(helloService.getMessage()).thenReturn("Bonjour");
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/hello/view")).andExpect(view().name("hello"))
+        .andExpect(model().attribute("message", "Bonjour"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().string(containsString("Bonjour")));
   }
 }
