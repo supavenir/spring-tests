@@ -1,14 +1,18 @@
 package fr.caensup.td4.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import fr.caensup.td4.models.User;
 import fr.caensup.td4.repositories.UserRepository;
 
 @Service
 public class UserService {
-  @Autowired
-  private UserRepository userRepository;
+
+  private final UserRepository userRepository;
+
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   public User createUser(String firstname, String lastname) {
     User u = new User(firstname, lastname);
@@ -17,5 +21,13 @@ public class UserService {
 
   public void deleteAll() {
     userRepository.deleteAll();
+  }
+
+  public Iterable<User> findAll() {
+    return userRepository.findAll();
+  }
+
+  public Optional<User> findOne(int id) {
+    return userRepository.findById(id);
   }
 }
