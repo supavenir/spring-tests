@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import fr.caensup.td4.SpringTestsApplication;
@@ -30,17 +31,23 @@ class HelloControllerTest {
 
   @Test
   void helloShouldReturnBonjour() throws Exception {
+    // Given
     when(helloService.getMessage()).thenReturn("Bonjour");
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
-        .andExpect(MockMvcResultMatchers.status().isOk())
+    // When
+    ResultActions results = this.mockMvc.perform(MockMvcRequestBuilders.get("/hello"));
+    // Then
+    results.andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(content().string(containsString("Bonjour")));
   }
 
   @Test
   void helloViewShouldReturnBonjour() throws Exception {
+    // Given
     when(helloService.getMessage()).thenReturn("Bonjour");
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/hello/view")).andExpect(view().name("hello"))
-        .andExpect(model().attribute("message", "Bonjour"))
+    // When
+    ResultActions results = this.mockMvc.perform(MockMvcRequestBuilders.get("/hello/view"));
+    // Then
+    results.andExpect(view().name("hello")).andExpect(model().attribute("message", "Bonjour"))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(content().string(containsString("Bonjour")));
   }

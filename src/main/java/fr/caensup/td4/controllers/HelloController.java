@@ -26,4 +26,9 @@ public class HelloController {
   public String helloViewAction() {
     return "hello";
   }
+
+  @GetMapping("/auth/hello")
+  public @ResponseBody String authHelloAction() {
+    return helloService.getAuthMessage();
+  }
 }
