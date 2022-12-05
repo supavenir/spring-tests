@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello With JS</title>
+</head>
+<body>
+	<h1>Message</h1>
+	<input type="text" id="msg" name="msg" value="{{msg}}">
+	<button id="bt">Calc</button>
+	<div id="length"></div>
+</body>
+<script>
+document.getElementById('bt').addEventListener('click',function(){
+	document.getElementById('length').innerHTML=document.getElementById('msg').value.length;
+});
+</script>
+</html>
